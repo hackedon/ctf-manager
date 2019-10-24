@@ -14,8 +14,14 @@ class CreateSubmissionsTable extends Migration
     public function up()
     {
         Schema::create('submissions', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('level_id');
+            $table->string('submitted_text')->nullable();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('level_id')->references('id')->on('levels');
         });
     }
 

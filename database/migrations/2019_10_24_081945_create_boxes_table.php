@@ -14,7 +14,12 @@ class CreateBoxesTable extends Migration
     public function up()
     {
         Schema::create('boxes', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->unsignedSmallInteger('difficulty')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('author')->nullable();
             $table->timestamps();
         });
     }
