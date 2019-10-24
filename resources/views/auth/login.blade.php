@@ -10,7 +10,7 @@
                             @csrf
                             <div class="form-group row justify-content-center">
                                 <div class="col-md-8">
-                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required
+                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="username" value="{{ old('email') }}" required
                                            autocomplete="email"
                                            autofocus placeholder="Username">
                                     @error('email')

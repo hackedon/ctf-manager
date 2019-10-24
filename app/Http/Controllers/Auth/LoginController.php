@@ -40,4 +40,11 @@ class LoginController extends Controller
     public function username() {
         return 'username';
     }
+
+    protected function credentials(Request $request) {
+        return [
+            'username' => $request->get('username'),
+            'password' => $request->get('password'),
+        ];
+    }
 }

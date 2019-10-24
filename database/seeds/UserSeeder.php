@@ -17,7 +17,8 @@ class UserSeeder extends Seeder
             'display_name' => 'CTF Admin',
             'username' => 'ctf_admin',
             'password' => Hash::make('password'),
-            'avatar' => 'admin.png'
+            'avatar' => 'admin.png',
+            'role' => 'ADMIN'
         ]);
 
         User::create([
