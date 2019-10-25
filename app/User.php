@@ -40,4 +40,8 @@ class User extends Authenticatable
     public function submissions(){
         return $this->hasMany(Submission::class);
     }
+
+    public function isAdmin(){
+        return $this->role === 'ADMIN';
+    }
 }

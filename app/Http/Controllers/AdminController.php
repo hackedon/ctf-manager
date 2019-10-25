@@ -13,6 +13,8 @@ use Ramsey\Uuid\Uuid;
 
 class AdminController extends Controller
 {
+
+
     public function index() {
         $counts = [
             'boxes' => Box::all()->count(),
@@ -176,7 +178,7 @@ class AdminController extends Controller
     public function showTeam($id) {
         $team = User::findOrFail($id);
         $boxes = Box::all();
-        $feed = $team->submissions;
+        $feed = $team->submissions()->orderBy('created_at', 'DESC')->get();
         $progress = new Collection();
         foreach ($boxes as $box){
             $levels = $box->levels;

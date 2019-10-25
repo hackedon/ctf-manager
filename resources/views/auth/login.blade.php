@@ -6,6 +6,9 @@
             <div class="col-md-6">
                 <div class="card shadow mt-5" style="background: #343a40">
                     <div class="card-body text-white mt-3 mb-3">
+                        <div class="row justify-content-center mb-4">
+                            <img src="{{asset('img/logo2.png')}}" style="width: 40%">
+                        </div>
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="form-group row justify-content-center">

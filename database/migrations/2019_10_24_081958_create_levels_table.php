@@ -17,7 +17,7 @@ class CreateLevelsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('box_id');
             $table->unsignedSmallInteger('flag_no');
-            $table->string('flag');
+            $table->string('flag')->unique();
             $table->unsignedSmallInteger('points')->default(10);
             $table->timestamps();
 
