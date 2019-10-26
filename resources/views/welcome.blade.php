@@ -6,7 +6,7 @@
     <title>HackedON - CTF Manager</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
+    <link rel="icon" href="{{asset('img/favicon.png')}}">
     <!-- Styles -->
     <style>
         html, body {
