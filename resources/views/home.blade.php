@@ -14,11 +14,13 @@
                     <div class="card-body">
                         <form method="POST" action="{{route('user.submit.flag')}}">
                             @csrf
-                            <div class="form-group">
-                                <input type="text" class="form-control" required placeholder="Enter Flag.." name="flag" autofocus>
+                            <div class="row justify-content-center">
+                                <div class="form-group col-md-8">
+                                    <input type="text" class="form-control" required placeholder="Enter Flag.." name="flag" autofocus>
+                                </div>
                             </div>
                             <div class="row justify-content-center">
-                                <button type="submit" class="btn btn-outline-danger" style="width: 60%">Submit Flag</button>
+                                <button type="submit" class="btn btn-outline-danger" style="width: 62%">Submit Flag</button>
                             </div>
                         </form>
                     </div>
@@ -80,7 +82,7 @@
             </div>
         </div>
 
-{{--        //// FOOTER ////        --}}
+        {{--        //// FOOTER ////        --}}
         <div class="row mt-5 mb-3">
             <div class="col-md-12 d-flex justify-content-center">
                 <img src="{{asset('img/logos.png')}}" style="width: 60%">
