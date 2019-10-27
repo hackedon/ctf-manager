@@ -13,8 +13,6 @@ use Ramsey\Uuid\Uuid;
 
 class AdminController extends Controller
 {
-
-
     public function index() {
         $counts = [
             'boxes' => Box::all()->count(),
@@ -32,7 +30,7 @@ class AdminController extends Controller
         $validator = Validator::make($request->all(), [
             'title' => 'string|min:2|required',
             'description' => 'string|min:2',
-            'difficulty' => 'numeric',
+            'difficulty' => 'numeric|gte:1|lte:10',
             'logo' => 'file|mimes:jpeg,bmp,png',
             'author' => 'string|min:2',
         ]);
@@ -126,7 +124,7 @@ class AdminController extends Controller
     public function storeFlag(Request $request) {
         $validator = Validator::make($request->all(), [
             'box_id' => 'required|numeric',
-            'flag' => 'required',
+            'flag' => 'required|string|min:4|max:255',
             'points' => 'required|numeric|gte:1'
         ]);
         if ($validator->fails()) {
@@ -134,6 +132,13 @@ class AdminController extends Controller
                 toastr()->error($err);
             }
             return back();
+        }
+
+        foreach (Level::all() as $lvl) {
+            if (Hash::check(strtolower($request->get('flag')), $lvl->flag)) {
+                toastr()->error('Exception in validating flag. Make sure the flag is unique.');
+                return back();
+            }
         }
         $lastLevel = 0;
         $box = Box::findOrFail($request->get('box_id'));
@@ -144,10 +149,15 @@ class AdminController extends Controller
         $newLevel->fill([
             'box_id' => $request->get('box_id'),
             'flag_no' => $lastLevel + 1,
-            'flag' => $request->get('flag'),
+            'flag' => Hash::make(strtolower($request->get('flag'))),
             'points' => $request->get('points'),
         ]);
-        $newLevel->save();
+        try {
+            $newLevel->save();
+        } catch (\Exception $exception) {
+            toastr()->error('Exception in saving flag. Make sure the flag is unique.');
+            return back();
+        }
         toastr()->success('Level ' . $newLevel->flag_no . ' added successfully!');
         return back();
     }
@@ -171,7 +181,14 @@ class AdminController extends Controller
 
     public function deleteBox($id) {
         $box = Box::findOrFail($id);
+        if ($box->submissions->count() > 0) {
+            $box->submissions()->delete();
+        }
+        if ($box->levels->count() > 0) {
+            $box->levels()->delete();
+        }
         $box->delete();
+        toastr()->success('Box deleted successfully!');
         return response()->json('ok');
     }
 
@@ -180,13 +197,13 @@ class AdminController extends Controller
         $boxes = Box::all();
         $feed = $team->submissions()->orderBy('created_at', 'DESC')->get();
         $progress = new Collection();
-        foreach ($boxes as $box){
+        foreach ($boxes as $box) {
             $levels = $box->levels;
             $boxLevelCount = $box->levels->count() > 0 ? $box->levels->count() : 1;
             $flagsFound = 0;
             $points = 0;
-            foreach ($levels as $level){
-                if($team->submissions()->where('level_id',$level->id)->count() > 0){
+            foreach ($levels as $level) {
+                if ($team->submissions()->where('level_id', $level->id)->count() > 0) {
                     $flagsFound++;
                     $points += $level->points;
                 }
@@ -205,19 +222,18 @@ class AdminController extends Controller
         ]);
     }
 
-    public function summary(){
-        $teams = User::where('role', 'USER')->orderBy('created_at','DESC')->get();
+    public function summary() {
+        $teams = User::where('role', 'USER')->orderBy('created_at', 'DESC')->get();
         $points = new Collection();
-        foreach ($teams as $team){
+        foreach ($teams as $team) {
             $teamPoints = 0;
-            foreach ($team->submissions as $submission){
-                $teamPoints+= $submission->level->points;
+            foreach ($team->submissions as $submission) {
+                $teamPoints += $submission->level->points;
             }
             $points->push(['team' => $team->display_name, 'points' => $teamPoints]);
         }
-        return view('admin.summary',[
+        return view('admin.summary', [
             'points' => $points
         ]);
     }
-
 }

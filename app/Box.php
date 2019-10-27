@@ -8,7 +8,11 @@ class Box extends Model
 {
     protected $fillable = ['title', 'description', 'difficulty', 'logo', 'author'];
 
-    public function levels(){
+    public function levels() {
         return $this->hasMany(Level::class);
+    }
+
+    public function submissions() {
+        return $this->hasMany(Submission::class);
     }
 }

@@ -27,7 +27,7 @@ class BoxSeeder extends Seeder
             'title' => 'UnForGiven',
             'description' => $faker->text,
             'difficulty' => 8,
-            'logo' => 'unforgiven.png',
+            'logo' => 'unforgiven.jpg',
             'author' => 'shapManasick'
         ]);
     }

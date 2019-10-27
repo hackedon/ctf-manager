@@ -34,5 +34,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'avatar' => 'cyberbots.png'
         ]);
+
+        User::create([
+            'display_name' => 'Anon',
+            'username' => 'anon',
+            'password' => Hash::make('password'),
+            'avatar' => 'anon.png'
+        ]);
     }
 }
