@@ -39,11 +39,47 @@
                                     <td>{{$row['box']}}</td>
                                     <td>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-striped {{$row['progress'] === 100 ? 'bg-success' : 'progress-bar-animated bg-danger'}}" role="progressbar" style="width: {{$row['progress']}}%"
+                                            <div class="progress-bar progress-bar-striped {{$row['progress'] === 100 ? 'bg-success' : 'progress-bar-animated bg-danger'}}" role="progressbar"
+                                                 style="width: {{$row['progress']}}%"
                                                  aria-valuenow="{{$row['progress']}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </td>
                                     <td>{{$row['score']}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card bg-dark shadow">
+                    <div class="card-body">
+                        <h1 class="display-4 text-center">Report Uploads</h1>
+                        <table class="table table-dark text-center table-sm table-striped">
+                            <thead>
+                            <tr>
+                                <th>Original Filename</th>
+                                <th>Created</th>
+                                <th>Download</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @if($reports->count() === 0)
+                                <tr>
+                                    <td colspan="3">Nothing here yet!</td>
+                                </tr>
+                            @endif
+                            @foreach($reports as $report)
+                                <tr>
+                                    <td>{{$report->original_filename}}</td>
+                                    <td>{{$report->created_at}} {{$report->created_at->diffForHumans()}}</td>
+                                    <td>
+                                        <a style="color: inherit" href="/storage/reports/{{$report->submission}}">Download</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -63,7 +99,9 @@
                             @foreach($feed as $submission)
                                 <tr>
                                     <td class="d-flex justify-content-between">
-                                        <span><i data-feather="rss"></i> Flag no. {{$submission->level->flag_no}} was submitted by {{$team->display_name}} for {{$submission->level->points}} points. <span class="text-muted">{{$submission->created_at->diffForHumans()}}</span></span>
+                                        <span><i
+                                                data-feather="rss"></i> Flag no. {{$submission->level->flag_no}} was submitted by {{$team->display_name}} for {{$submission->level->points}} points. <span
+                                                class="text-muted">{{$submission->created_at->diffForHumans()}}</span></span>
                                         <h4><span class="badge badge-danger">{{$submission->level->box->title}}</span></h4>
                                     </td>
                                 </tr>

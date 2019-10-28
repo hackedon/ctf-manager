@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Box;
+use App\Config;
 use App\Level;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,10 +20,16 @@ class AdminController extends Controller
             'flags' => Level::all()->count(),
             'teams' => User::where('role', 'USER')->count()
         ];
+
+        $allowReportUploads = Config::where('key', 'allowReportUploads')->first()->value === '1';
+        $allowFlagSubmission = Config::where('key', 'allowFlagSubmission')->first()->value === '1';
+
         return view('admin.index', [
             'counts' => $counts,
             'boxes' => Box::all(),
-            'teams' => User::where('role', 'USER')->get()
+            'teams' => User::where('role', 'USER')->get(),
+            'allowReportUploads' => $allowReportUploads,
+            'allowFlagSubmission' => $allowFlagSubmission
         ]);
     }
 
@@ -62,7 +69,8 @@ class AdminController extends Controller
     public function storeTeam(Request $request) {
         $validator = Validator::make($request->all(), [
             'display_name' => 'string|min:2|required',
-            'username' => 'required|string|min:4',
+            'affiliation' => 'string|min:2',
+            'username' => 'required|string|min:4|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required',
             'avatar' => 'file|mimes:jpeg,bmp,png',
@@ -79,7 +87,7 @@ class AdminController extends Controller
         if ($request->hasFile('avatar')) {
             try {
                 $logo = $request->file('avatar');
-                $filename = str_replace('-', '', Uuid::uuid4()->toString()) . '-' . $logo->getFilename() . '.' . $logo->getClientOriginalExtension();
+                $filename = str_replace('-', '', Uuid::uuid4()->toString()) . '-' . $logo->getClientOriginalName() . '.' . $logo->getClientOriginalExtension();
                 $logo->storeAs('public/avatars/', $filename);
                 $newTeam->fill(['avatar' => $filename]);
             } catch (\Exception $e) {
@@ -219,7 +227,8 @@ class AdminController extends Controller
         return view('admin.team', [
             'team' => $team,
             'progress' => $progress,
-            'feed' => $feed
+            'feed' => $feed,
+            'reports' => $team->reports()->orderBy('created_at', 'DESC')->get()
         ]);
     }
 
@@ -230,6 +239,9 @@ class AdminController extends Controller
         }
         if ($team->submissions->count() > 0) {
             $team->submissions()->delete();
+        }
+        if ($team->reports->count() > 0) {
+            $team->reports()->delete();
         }
         $team->delete();
         toastr()->success('Team deleted successfully!');
@@ -249,5 +261,24 @@ class AdminController extends Controller
         return view('admin.summary', [
             'points' => $points
         ]);
+    }
+
+    public function saveSettings(Request $request) {
+        if ($request->has('allowFlagSubmission')) {
+            $val = $request->get('allowFlagSubmission') === '1' ? '1' : '0';
+            $config = Config::where('key', 'allowFlagSubmission')->first();
+            $config->value = $val;
+            $config->save();
+            toastr()->success('Allow Flag Submission updated');
+        } elseif ($request->has('allowReportUploads')) {
+            $val = $request->get('allowReportUploads') === '1' ? '1' : '0';
+            $config = Config::where('key', 'allowReportUploads')->first();
+            $config->value = $val;
+            $config->save();
+            toastr()->success('Allow Report Uploads updated');
+        } else {
+            toastr()->error('Invalid Request');
+        }
+        return back();
     }
 }

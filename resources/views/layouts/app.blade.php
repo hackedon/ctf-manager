@@ -21,8 +21,42 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="icon" href="{{asset('img/favicon.png')}}">
+    <script type="text/javascript" src="{{asset('js/countdown.js')}}"></script>
 
     @toastr_css
+
+    <style type="text/css">
+        .countdown {
+            display: flex;
+        }
+
+        .countdown .day,
+        .countdown .hour,
+        .countdown .min,
+        .countdown .sec {
+            color: #297ed8;
+            padding: 1vw 3vw;
+            text-align: center;
+        }
+
+        .countdown .day .num,
+        .countdown .hour .num,
+        .countdown .min .num,
+        .countdown .sec .num {
+            display: block;
+            font-size: 4vw;
+            line-height: 1em;
+        }
+
+        .countdown .day .word,
+        .countdown .hour .word,
+        .countdown .min .word,
+        .countdown .sec .word {
+            display: block;
+            font-size: 1vw;
+            color: #8a99ab;
+        }
+    </style>
 
 </head>
 <body style="background: #343a40">
@@ -63,7 +97,7 @@
                             <a class="nav-link" href="{{route('admin.summary')}}">Summary</a>
                         </li>
                         <li class="nav-item mr-3">
-                            <a class="nav-link" href="#">Rules</a>
+                            <a class="nav-link" href="{{route('rules')}}">Rules</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

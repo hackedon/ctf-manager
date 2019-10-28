@@ -43,6 +43,50 @@
                             <h1 class="text-danger text-center">{{$counts['flags']}}</h1>
                         </div>
                     </div>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="text-center">Global Settings</h5>
+                            <form method="POST" action="{{route('admin.save.settings')}}">
+                                @csrf
+                                <div class="form-group">
+                                    <label>Allow Flag Submission</label>
+                                    <div class="form-check">
+                                        <input onchange="this.form.submit()" class="form-check-input" type="radio" name="allowFlagSubmission" value="1" {{$allowFlagSubmission ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input onchange="this.form.submit()" class="form-check-input" type="radio" name="allowFlagSubmission" value="0" {{$allowFlagSubmission ? '' : 'checked'}}>
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                            <hr>
+                            <form method="POST" action="{{route('admin.save.settings')}}">
+                                @csrf
+                                <div class="form-group">
+                                    <label>Allow Report Upload</label>
+                                    <div class="form-check">
+                                        <input onchange="this.form.submit()" class="form-check-input" type="radio" name="allowReportUploads" value="1" {{$allowReportUploads ? 'checked' : ''}}>
+                                        <label class="form-check-label" for="exampleRadios1">
+                                            Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input onchange="this.form.submit()" class="form-check-input" type="radio" name="allowReportUploads" value="0" {{$allowReportUploads ? '' : 'checked'}}>
+                                        <label class="form-check-label" for="exampleRadios2">
+                                            No
+                                        </label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -68,11 +112,11 @@
                             <input class="form-control" type="text" name="description" placeholder="Description" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="number" step="1" name="difficulty" placeholder="Difficulty">
+                            <input class="form-control" type="number" step="1" name="difficulty" placeholder="Difficulty" required>
                         </div>
                         <div class="form-group">
                             <label>Box Logo</label>
-                            <input class="form-control-file" type="file" name="logo" placeholder="Logo">
+                            <input class="form-control-file" type="file" name="logo" placeholder="Logo" required>
                         </div>
                         <div class="form-group">
                             <input class="form-control" type="text" name="author" placeholder="Author">
@@ -106,10 +150,13 @@
                             <input class="form-control" type="text" name="display_name" placeholder="Display Name" required>
                         </div>
                         <div class="form-group">
+                            <input class="form-control" type="text" name="affiliation" placeholder="Affiliation (i.e: university)">
+                        </div>
+                        <div class="form-group">
                             <input class="form-control" type="text" name="username" placeholder="Username" required>
                         </div>
                         <div class="form-group">
-                            <input class="form-control" type="password" name="password" placeholder="Password" required>
+                            <input class="form-control mb-1" type="password" name="password" placeholder="Password" required>
                             <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password" required>
                         </div>
                         <div class="form-group">
