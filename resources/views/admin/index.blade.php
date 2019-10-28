@@ -77,7 +77,9 @@
                         <div class="form-group">
                             <input class="form-control" type="text" name="author" placeholder="Author">
                         </div>
-
+                        <div class="form-group">
+                            <input class="form-control" type="text" name="url" placeholder="URL">
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

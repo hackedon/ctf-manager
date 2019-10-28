@@ -20,6 +20,7 @@ class CreateBoxesTable extends Migration
             $table->unsignedSmallInteger('difficulty')->nullable();
             $table->string('logo')->nullable();
             $table->string('author')->nullable();
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

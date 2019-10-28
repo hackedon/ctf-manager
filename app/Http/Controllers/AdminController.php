@@ -33,6 +33,7 @@ class AdminController extends Controller
             'difficulty' => 'numeric|gte:1|lte:10',
             'logo' => 'file|mimes:jpeg,bmp,png',
             'author' => 'string|min:2',
+            'url' => 'string|url'
         ]);
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {

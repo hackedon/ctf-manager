@@ -16,7 +16,8 @@
                     <p>
                         {{$box->description}}
                         @if(isset($box->author)) <br><small class="text-muted">{{'@'.$box->author}}</small> @endif @if(isset($box->difficulty)) | <small
-                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif
+                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif @if(isset($box->difficulty)) | <small
+                            class="text-muted"><a style="color: inherit" target="_blank" href="{{$box->url}}">{{$box->url}}</a></small> @endif
                     </p>
                 </div>
                 <div>

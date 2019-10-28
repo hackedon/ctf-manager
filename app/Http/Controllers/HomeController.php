@@ -35,7 +35,7 @@ class HomeController extends Controller
             $summaryCollection->push([
                 'box' => $box,
                 'completePercentage' => $box->levels->count() > 0 ? ($flagsFound / $box->levels->count() * 100) : 0,
-                'flagsFoundText' => $flagsFound . ' / ' . $box->levels->count() . ' flags found.',
+                'flagsFoundText' => $flagsFound . ' / ' . $box->levels->count() . ' flags found',
                 'points' => $points
             ]);
         }

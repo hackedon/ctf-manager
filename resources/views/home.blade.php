@@ -42,7 +42,12 @@
                             <h5 class="card-title">{{$row['box']->title}}</h5>
                             <p class="card-text">{{$row['box']->description}}</p>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer text-center">
+                            <small><a class="text-muted" style="color: inherit" target="_blank" href="{{$row['box']->url}}">{{$row['box']->url}}</a></small> <br>
+                            <small class="text-muted">difficulty</small>
+                            <div class="progress mb-3" style="height: 5px;">
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: {{$row['box']->difficulty / 10 * 100}}%;" aria-valuenow="{{$row['box']->difficulty / 10 * 100}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
                             <div class="progress" style="height: 30px;">
                                 <div class="progress-bar progress-bar-striped {{$row['completePercentage'] === 100 ? 'bg-success' : 'progress-bar-animated bg-dark'}}" role="progressbar" style="width: {{$row['completePercentage']}}%;"
                                      aria-valuenow="{{$row['completePercentage']}}" aria-valuemin="0" aria-valuemax="100">
