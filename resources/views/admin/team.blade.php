@@ -63,7 +63,7 @@
                             @foreach($feed as $submission)
                                 <tr>
                                     <td class="d-flex justify-content-between">
-                                        <span><i data-feather="rss"></i> Flag no. {{$submission->level->flag_no}} was submitted by {{$team->display_name}} <span class="text-muted">{{$submission->created_at->diffForHumans()}}</span></span>
+                                        <span><i data-feather="rss"></i> Flag no. {{$submission->level->flag_no}} was submitted by {{$team->display_name}} for {{$submission->level->points}} points. <span class="text-muted">{{$submission->created_at->diffForHumans()}}</span></span>
                                         <h4><span class="badge badge-danger">{{$submission->level->box->title}}</span></h4>
                                     </td>
                                 </tr>
