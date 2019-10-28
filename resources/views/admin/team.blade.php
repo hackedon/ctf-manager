@@ -39,7 +39,7 @@
                                     <td>{{$row['box']}}</td>
                                     <td>
                                         <div class="progress">
-                                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: {{$row['progress']}}%"
+                                            <div class="progress-bar progress-bar-striped {{$row['progress'] === 100 ? 'bg-success' : 'progress-bar-animated bg-danger'}}" role="progressbar" style="width: {{$row['progress']}}%"
                                                  aria-valuenow="{{$row['progress']}}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </td>
