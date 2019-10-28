@@ -44,7 +44,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="progress" style="height: 30px;">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-dark" role="progressbar" style="width: {{$row['completePercentage']}}%;"
+                                <div class="progress-bar {{$row['completePercentage'] === 100 ? 'bg-success' : 'progress-bar-striped progress-bar-animated bg-dark'}}" role="progressbar" style="width: {{$row['completePercentage']}}%;"
                                      aria-valuenow="{{$row['completePercentage']}}" aria-valuemin="0" aria-valuemax="100">
                                     <strong>{{$row['completePercentage']}}%</strong>
                                 </div>
@@ -73,7 +73,7 @@
                             <td class="d-flex justify-content-between">
                                 <span><i data-feather="rss"></i> Flag no. {{$submission->level->flag_no}} was submitted by {{auth()->user()->display_name}} for {{$submission->level->points}} points.<span
                                         class="text-muted"> &nbsp; {{$submission->created_at->diffForHumans()}}</span></span>
-                                <h5><span class="badge badge-danger">{{$submission->level->box->title}}</span></h5>
+                                <h5><span class="badge badge-danger">{{$submission->box->title}}</span></h5>
                             </td>
                         </tr>
                     @endforeach
