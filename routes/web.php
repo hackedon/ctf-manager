@@ -25,6 +25,7 @@ Route::middleware(['check.if.admin', 'auth'])->prefix('/admin')->group(function 
     Route::delete('/box/{id}', 'AdminController@deleteBox')->name('admin.delete.box');
     Route::post('/storeFlag', 'AdminController@storeFlag')->name('admin.store.flag');
     Route::post('/deleteFlag', 'AdminController@deleteFlag')->name('admin.delete.flag');
+    Route::delete('/team/{id}','AdminController@deleteTeam')->name('admin.delete.team');
 
     Route::get('/team/{id}', 'AdminController@showTeam')->name('admin.show.team');
 });

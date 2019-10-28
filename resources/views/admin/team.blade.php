@@ -15,7 +15,7 @@
                     <h1 class="display-3">{{$team->display_name}}</h1>
                 </div>
                 <div>
-                    <button class="btn btn-outline-danger" onclick="if(confirm('Are you absolutely sure?')) deleteBox()">Delete Team</button>
+                    <button class="btn btn-outline-danger" onclick="if(confirm('Are you absolutely sure?')) deleteTeam()">Delete Team</button>
                 </div>
             </div>
         </div>
@@ -75,4 +75,16 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function deleteTeam() {
+            axios.delete('{{route('admin.delete.team',['id'=>$team->id])}}')
+                .then(() => {
+                    window.location = '{{route('admin.home')}}';
+                }).catch(err => {
+                toastr.error('Error');
+                console.log(err);
+            })
+        }
+    </script>
 @endsection

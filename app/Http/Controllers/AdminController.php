@@ -222,6 +222,19 @@ class AdminController extends Controller
         ]);
     }
 
+    public function deleteTeam($id) {
+        $team = User::findOrFail($id);
+        if ($team->isAdmin()) {
+            return response()->json('invalid user', 422);
+        }
+        if ($team->submissions->count() > 0) {
+            $team->submissions()->delete();
+        }
+        $team->delete();
+        toastr()->success('Team deleted successfully!');
+        return response()->json('ok');
+    }
+
     public function summary() {
         $teams = User::where('role', 'USER')->orderBy('created_at', 'DESC')->get();
         $points = new Collection();
