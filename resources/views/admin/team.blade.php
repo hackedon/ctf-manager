@@ -3,7 +3,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background: #2d3238;">
-                <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Admin Home</a></li>
+                <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Teams</li>
                 <li class="breadcrumb-item active" aria-current="page">{{$team->display_name}}</li>
             </ol>
@@ -76,7 +76,7 @@
                             @foreach($reports as $report)
                                 <tr>
                                     <td>{{$report->original_filename}}</td>
-                                    <td>{{$report->created_at}} {{$report->created_at->diffForHumans()}}</td>
+                                    <td>{{$report->created_at}} | <small>{{$report->created_at->diffForHumans()}}</small></td>
                                     <td>
                                         <a style="color: inherit" href="/storage/reports/{{$report->submission}}">Download</a>
                                     </td>
@@ -110,6 +110,12 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-3">
+            <div class="col-md-12 text-center text-muted">
+                &copy;{{date('Y')}} <a href="https://hackedon.com" target="_blank" style="color: inherit" rel="nofollow">HackedON</a>
             </div>
         </div>
     </div>

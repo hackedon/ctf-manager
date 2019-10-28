@@ -3,7 +3,7 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background: #2d3238;">
-                <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Admin Home</a></li>
+                <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Boxes</li>
                 <li class="breadcrumb-item active" aria-current="page">{{$box->title}}</li>
             </ol>
@@ -101,6 +101,12 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-3">
+            <div class="col-md-12 text-center text-muted">
+                &copy;{{date('Y')}} <a href="https://hackedon.com" target="_blank" style="color: inherit" rel="nofollow">HackedON</a>
             </div>
         </div>
     </div>

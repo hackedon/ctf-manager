@@ -15,10 +15,10 @@ Route::get('/rules', function () {
     return view('rules');
 })->name('rules');
 
-Route::post('/submitFlag', 'HomeController@submitFlag')->middleware(['throttle:3,1'])->name('user.submit.flag');
 // 3 requests per minute
-
-Route::post('/uploadReport', 'HomeController@uploadReport')->middleware(['throttle:12,1'])->name('user.upload.report');
+Route::post('/submitFlag', 'HomeController@submitFlag')->middleware(['throttle:3,1'])->name('user.submit.flag');
+// 2 requests per minute
+Route::post('/uploadReport', 'HomeController@uploadReport')->middleware(['throttle:2,1'])->name('user.upload.report');
 
 Route::middleware(['check.if.admin', 'auth'])->prefix('/admin')->group(function () {
     Route::get('/', 'AdminController@index')->name('admin.home');

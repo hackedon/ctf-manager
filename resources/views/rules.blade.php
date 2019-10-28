@@ -2,6 +2,19 @@
 
 @section('content')
     <div class="container">
+        @if(auth()->check())
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb" style="background: #2d3238;">
+                    @if(auth()->user()->isAdmin())
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
+                    @else
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('home')}}">Home</a></li>
+                    @endif
+                    <li class="breadcrumb-item active" aria-current="page">Rules</li>
+                </ol>
+            </nav>
+        @endif
+
         <div class="row">
             <div class="col-md-10 text-white">
                 <h2 class="display-4">Guidelines</h2>
@@ -34,9 +47,10 @@
                             <li>File Name: ‘TeamName.docx’</li>
                         </ul>
                     </li>
-                    <li>You should upload your report to hackmeifyoucan.hackedon.com before the clock expires. (Please note that the upload endpoint will not accept any files after the clock
+                    <li>You should upload your report to <a style="color: inherit" href="https://hackmeifyoucan.hackedon.com">hackmeifyoucan.hackedon.com</a> before the clock expires. (Please note that the upload endpoint will not accept any files after the clock
                         expires.)
                     </li>
+                    <li>Each team has a maximum of 5 report uploads.</li>
                     <li>Team name (Display Name) cannot be changed (Same name as the initial registration).</li>
                     <li>Marks will be deducted for hints.</li>
                     <li>Bypassing the box in any way is prohibited and that will lead the team to be disqualified.</li>
@@ -49,5 +63,15 @@
                 </ol>
             </div>
         </div>
+
+            <div class="row mt-5 mb-3">
+                <div class="col-md-12 d-flex justify-content-center">
+                    <img src="{{asset('img/logos.png')}}" style="width: 60%">
+                </div>
+                <div class="col-md-12 text-center text-muted">
+                    &copy;{{date('Y')}} <a href="https://hackedon.com" target="_blank" style="color: inherit" rel="nofollow">HackedON</a>
+                </div>
+            </div>
+
     </div>
 @endsection

@@ -5,9 +5,9 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background: #2d3238;">
                     @if(auth()->user()->isAdmin())
-                        <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Admin Home</a></li>
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
                     @else
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('home')}}">Home</a></li>
                     @endif
                     <li class="breadcrumb-item active" aria-current="page">Summary</li>
                 </ol>
