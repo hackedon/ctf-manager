@@ -14,7 +14,10 @@
                     <img src="/storage/avatars/{{$team->avatar}}" class="float-left img-thumbnail mr-3" style="width: 150px">
                 @endif
                 <div class="text-white {{isset($team->avatar) ? 'ml-3': ''}}">
-                    <h1 class="display-3">{{$team->display_name}}</h1>
+                    <h1 class="display-4">{{$team->display_name}}</h1>
+                    <div style="margin-top: -10px;" class="text-muted">
+                        <h4>{{$team->affiliation}}</h4>
+                    </div>
                 </div>
                 <div>
                     <button class="btn btn-outline-danger" onclick="if(confirm('Are you absolutely sure?')) deleteTeam()">Delete Team</button>

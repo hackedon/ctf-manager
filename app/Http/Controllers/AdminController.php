@@ -207,6 +207,10 @@ class AdminController extends Controller
 
     public function showTeam($id) {
         $team = User::findOrFail($id);
+        if($team->isAdmin()){
+            toastr()->error('Invalid Team');
+            return back();
+        }
         $boxes = Box::all();
         $feed = $team->submissions()->orderBy('created_at', 'DESC')->get();
         $progress = new Collection();
