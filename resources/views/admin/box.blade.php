@@ -3,20 +3,21 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb" style="background: #2d3238;">
-                <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Admin Home</a></li>
+                <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
                 <li class="breadcrumb-item active" aria-current="page">Boxes</li>
                 <li class="breadcrumb-item active" aria-current="page">{{$box->title}}</li>
             </ol>
         </nav>
         <div class="row justify-content-between">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <img src="/storage/boxes/{{$box->logo}}" class="float-left img-thumbnail mr-3" style="width: 250px">
                 <div class="text-white ml-3">
                     <h1 class="display-3">{{$box->title}}</h1>
                     <p>
                         {{$box->description}}
                         @if(isset($box->author)) <br><small class="text-muted">{{'@'.$box->author}}</small> @endif @if(isset($box->difficulty)) | <small
-                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif
+                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif @if(isset($box->url)) | <small
+                            class="text-muted"><a style="color: inherit" target="_blank" href="{{$box->url}}">{{$box->url}}</a></small> @endif
                     </p>
                 </div>
                 <div>
@@ -100,6 +101,12 @@
 
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-3">
+            <div class="col-md-12 text-center text-muted">
+                &copy;{{date('Y')}} <a href="https://hackedon.com" target="_blank" style="color: inherit" rel="nofollow">HackedON</a>
             </div>
         </div>
     </div>

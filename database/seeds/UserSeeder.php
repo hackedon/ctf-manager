@@ -21,25 +21,25 @@ class UserSeeder extends Seeder
             'role' => 'ADMIN'
         ]);
 
-        User::create([
-            'display_name' => 'HackedON',
-            'username' => 'hackedon',
-            'password' => Hash::make('password'),
-            'avatar' => 'hackedon.png'
-        ]);
-
-        User::create([
-            'display_name' => 'CyberBotNets',
-            'username' => 'cyberbots',
-            'password' => Hash::make('password'),
-            'avatar' => 'cyberbots.png'
-        ]);
-
-        User::create([
-            'display_name' => 'Anon',
-            'username' => 'anon',
-            'password' => Hash::make('password'),
-            'avatar' => 'anon.png'
-        ]);
+//        User::create([
+//            'display_name' => 'HackedON',
+//            'username' => 'hackedon',
+//            'password' => Hash::make('password'),
+//            'avatar' => 'hackedon.png'
+//        ]);
+//
+//        User::create([
+//            'display_name' => 'CyberBotNets',
+//            'username' => 'cyberbots',
+//            'password' => Hash::make('password'),
+//            'avatar' => 'cyberbots.png'
+//        ]);
+//
+//        User::create([
+//            'display_name' => 'Anon',
+//            'username' => 'anon',
+//            'password' => Hash::make('password'),
+//            'avatar' => 'anon.png'
+//        ]);
     }
 }

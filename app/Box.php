@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Box extends Model
 {
-    protected $fillable = ['title', 'description', 'difficulty', 'logo', 'author'];
+    protected $fillable = ['title', 'description', 'difficulty', 'logo', 'author', 'url'];
 
     public function levels() {
         return $this->hasMany(Level::class);
@@ -14,5 +14,9 @@ class Box extends Model
 
     public function submissions() {
         return $this->hasMany(Submission::class);
+    }
+
+    public function hints() {
+        return $this->hasMany(HintRequest::class);
     }
 }

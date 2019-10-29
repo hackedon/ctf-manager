@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'display_name', 'username', 'password', 'avatar'
+        'display_name', 'username', 'password', 'avatar', 'affiliation'
     ];
 
     /**
@@ -37,11 +37,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function submissions(){
+    public function submissions() {
         return $this->hasMany(Submission::class);
     }
 
-    public function isAdmin(){
+    public function reports() {
+        return $this->hasMany(Report::class);
+    }
+
+    public function hints() {
+        return $this->hasMany(HintRequest::class);
+    }
+
+    public function isAdmin() {
         return $this->role === 'ADMIN';
     }
 }

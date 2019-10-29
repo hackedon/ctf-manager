@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Box;
+use App\Config;
+use App\HintRequest;
 use App\Level;
 use App\User;
 use Illuminate\Http\Request;
@@ -19,20 +21,27 @@ class AdminController extends Controller
             'flags' => Level::all()->count(),
             'teams' => User::where('role', 'USER')->count()
         ];
+
+        $allowReportUploads = Config::where('key', 'allowReportUploads')->first()->value === '1';
+        $allowFlagSubmission = Config::where('key', 'allowFlagSubmission')->first()->value === '1';
+
         return view('admin.index', [
             'counts' => $counts,
             'boxes' => Box::all(),
-            'teams' => User::where('role', 'USER')->get()
+            'teams' => User::where('role', 'USER')->get(),
+            'allowReportUploads' => $allowReportUploads,
+            'allowFlagSubmission' => $allowFlagSubmission
         ]);
     }
 
     public function storeBox(Request $request) {
         $validator = Validator::make($request->all(), [
             'title' => 'string|min:2|required',
-            'description' => 'string|min:2',
+            'description' => 'string|min:2|required',
             'difficulty' => 'numeric|gte:1|lte:10',
             'logo' => 'file|mimes:jpeg,bmp,png',
-            'author' => 'string|min:2',
+            'author' => 'string|min:2|nullable',
+            'url' => 'string|url|nullable'
         ]);
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {
@@ -61,7 +70,8 @@ class AdminController extends Controller
     public function storeTeam(Request $request) {
         $validator = Validator::make($request->all(), [
             'display_name' => 'string|min:2|required',
-            'username' => 'required|string|min:4',
+            'affiliation' => 'string|min:2',
+            'username' => 'required|string|min:4|unique:users',
             'password' => 'required|confirmed',
             'password_confirmation' => 'required',
             'avatar' => 'file|mimes:jpeg,bmp,png',
@@ -78,7 +88,7 @@ class AdminController extends Controller
         if ($request->hasFile('avatar')) {
             try {
                 $logo = $request->file('avatar');
-                $filename = str_replace('-', '', Uuid::uuid4()->toString()) . '-' . $logo->getFilename() . '.' . $logo->getClientOriginalExtension();
+                $filename = str_replace('-', '', Uuid::uuid4()->toString()) . '-' . $logo->getClientOriginalName() . '.' . $logo->getClientOriginalExtension();
                 $logo->storeAs('public/avatars/', $filename);
                 $newTeam->fill(['avatar' => $filename]);
             } catch (\Exception $e) {
@@ -187,6 +197,9 @@ class AdminController extends Controller
         if ($box->levels->count() > 0) {
             $box->levels()->delete();
         }
+        if ($box->hints->count() > 0) {
+            $box->hints()->delete();
+        }
         $box->delete();
         toastr()->success('Box deleted successfully!');
         return response()->json('ok');
@@ -194,6 +207,10 @@ class AdminController extends Controller
 
     public function showTeam($id) {
         $team = User::findOrFail($id);
+        if($team->isAdmin()){
+            toastr()->error('Invalid Team');
+            return back();
+        }
         $boxes = Box::all();
         $feed = $team->submissions()->orderBy('created_at', 'DESC')->get();
         $progress = new Collection();
@@ -211,6 +228,7 @@ class AdminController extends Controller
             $progress->push([
                 'box' => $box->title,
                 'progress' => $flagsFound / $boxLevelCount * 100,
+                'flagFraction' => $flagsFound . ' / ' . $boxLevelCount,
                 'score' => $points
             ]);
         }
@@ -218,7 +236,9 @@ class AdminController extends Controller
         return view('admin.team', [
             'team' => $team,
             'progress' => $progress,
-            'feed' => $feed
+            'feed' => $feed,
+            'reports' => $team->reports()->orderBy('created_at', 'DESC')->get(),
+            'hintRequests' => $team->hints
         ]);
     }
 
@@ -229,6 +249,12 @@ class AdminController extends Controller
         }
         if ($team->submissions->count() > 0) {
             $team->submissions()->delete();
+        }
+        if ($team->reports->count() > 0) {
+            $team->reports()->delete();
+        }
+        if ($team->hints->count() > 0) {
+            $team->hints()->delete();
         }
         $team->delete();
         toastr()->success('Team deleted successfully!');
@@ -248,5 +274,56 @@ class AdminController extends Controller
         return view('admin.summary', [
             'points' => $points
         ]);
+    }
+
+    public function saveSettings(Request $request) {
+        if ($request->has('allowFlagSubmission')) {
+            $val = $request->get('allowFlagSubmission') === '1' ? '1' : '0';
+            $config = Config::where('key', 'allowFlagSubmission')->first();
+            $config->value = $val;
+            $config->save();
+            toastr()->success('Allow Flag Submission updated');
+        } elseif ($request->has('allowReportUploads')) {
+            $val = $request->get('allowReportUploads') === '1' ? '1' : '0';
+            $config = Config::where('key', 'allowReportUploads')->first();
+            $config->value = $val;
+            $config->save();
+            toastr()->success('Allow Report Uploads updated');
+        } else {
+            toastr()->error('Invalid Request');
+        }
+        return back();
+    }
+
+    public function showHintRequests() {
+        return view('admin.hint_requests', [
+            'hintRequests' => HintRequest::paginate(20)
+        ]);
+    }
+
+    public function toggleActiveStatus(Request $request) {
+        if ($request->has('value') && $request->has('request_id')) {
+            $rq = HintRequest::findOrFail($request->get('request_id'));
+            $rq->active = $request->get('value') === '1' ? false : true;
+            $rq->save();
+            return response()->json(['status' => 'ok'], 200);
+        }
+        return response()->json(['status' => 'fail'], 422);
+    }
+
+    public function updateCost(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'request_id' => 'required|numeric',
+            'cost' => 'required|numeric|gte:0|lte:10'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'fail'], 422);
+        }
+
+        $rq = HintRequest::findOrFail($request->get('request_id'));
+        $rq->cost = $request->get('cost');
+        $rq->save();
+        return response()->json(['status' => 'ok'], 200);
+
     }
 }

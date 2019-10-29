@@ -5,9 +5,9 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb" style="background: #2d3238;">
                     @if(auth()->user()->isAdmin())
-                        <li class="breadcrumb-item"><a href="{{route('admin.home')}}">Admin Home</a></li>
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('admin.home')}}">Admin Home</a></li>
                     @else
-                        <li class="breadcrumb-item"><a href="{{route('home')}}">Home</a></li>
+                        <li class="breadcrumb-item text-white"><a style="color: inherit" href="{{route('home')}}">Home</a></li>
                     @endif
                     <li class="breadcrumb-item active" aria-current="page">Summary</li>
                 </ol>
@@ -36,7 +36,7 @@
 
         setInterval(() => {
             window.location.reload();
-        }, 60000);
+        }, 60000*2);
 
         let chartColors = {
             red: 'rgb(255, 99, 132)',
@@ -46,7 +46,7 @@
             blue: 'rgb(54, 162, 235)',
             purple: 'rgb(153, 102, 255)',
             grey: 'rgb(201, 203, 207)',
-            customColor: 'rgb(48,48,48)',
+            customColor: 'rgb(48,33,33)',
         };
         let barChartData = {
             labels: [
