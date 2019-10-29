@@ -36,11 +36,11 @@ class AdminController extends Controller
     public function storeBox(Request $request) {
         $validator = Validator::make($request->all(), [
             'title' => 'string|min:2|required',
-            'description' => 'string|min:2',
+            'description' => 'string|min:2|required',
             'difficulty' => 'numeric|gte:1|lte:10',
             'logo' => 'file|mimes:jpeg,bmp,png',
-            'author' => 'string|min:2',
-            'url' => 'string|url'
+            'author' => 'string|min:2|nullable',
+            'url' => 'string|url|nullable'
         ]);
         if ($validator->fails()) {
             foreach ($validator->errors()->all() as $error) {
