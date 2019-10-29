@@ -34,7 +34,7 @@
         .countdown .hour,
         .countdown .min,
         .countdown .sec {
-            color: #297ed8;
+            color: #ffed4a;
             padding: 1vw 3vw;
             text-align: center;
         }
@@ -44,7 +44,7 @@
         .countdown .min .num,
         .countdown .sec .num {
             display: block;
-            font-size: 4vw;
+            font-size: 8vw;
             line-height: 1em;
         }
 
@@ -53,7 +53,7 @@
         .countdown .min .word,
         .countdown .sec .word {
             display: block;
-            font-size: 1vw;
+            font-size: 4vw;
             color: #8a99ab;
         }
     </style>
@@ -99,9 +99,11 @@
                         <li class="nav-item mr-3">
                             <a class="nav-link" href="{{route('admin.summary')}}">Summary</a>
                         </li>
-                        <li class="nav-item mr-3">
-                            <a class="nav-link" href="{{route('admin.show.hint.requests')}}">Hint Requests</a>
-                        </li>
+                        @if(auth()->user()->isAdmin())
+                            <li class="nav-item mr-3">
+                                <a class="nav-link" href="{{route('admin.show.hint.requests')}}">Hint Requests</a>
+                            </li>
+                        @endif
                         <li class="nav-item mr-3">
                             <a class="nav-link" href="{{route('rules')}}">Rules</a>
                         </li>

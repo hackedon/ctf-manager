@@ -8,17 +8,6 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-md-12 d-flex justify-content-center">
-                <div class="countdown" data-date="31-10-2019" data-time="04:00">
-                    <div class="day"><span class="num"></span><span class="word"></span></div>
-                    <div class="hour"><span class="num"></span><span class="word"></span></div>
-                    <div class="min"><span class="num"></span><span class="word"></span></div>
-                    <div class="sec"><span class="num"></span><span class="word"></span></div>
-                </div>
-            </div>
-        </div>
-
         @if($allowFlagSubmission)
             <div class="row justify-content-center mb-5">
                 <div class="col-md-8">
@@ -147,13 +136,6 @@
         </div>
     </div>
     <script type="text/javascript">
-        const efcc_countdown = new countdown({
-            target: '.countdown',
-            dayWord: ' days',
-            hourWord: ' hours',
-            minWord: ' mins',
-            secWord: ' secs'
-        });
 
         const requestHint = box_id => {
             axios.post('{{route('user.request.hint')}}', {box_id}).then(res => {
