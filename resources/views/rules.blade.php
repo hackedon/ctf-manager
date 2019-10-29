@@ -59,7 +59,7 @@
                     <li>The marks displayed on the system is subject to change.</li>
                     <li>Changes may occur after judges’ evaluation of Flag Report submitted by your team.</li>
                     <li>Finalists will be notified within the day & are expected to participate in the final awards ceremony.</li>
-                    <li>Awards Ceremony will start at 2.00pm on 3rd October 2018.</li>
+{{--                    <li>Awards Ceremony will start at 2.00pm on 3rd October 2018.</li>--}}
                 </ol>
             </div>
         </div>
