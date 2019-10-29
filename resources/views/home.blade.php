@@ -63,7 +63,7 @@
         <div class="row justify-content-center">
             @foreach($summary as $row)
                 <div class="col-sm-4">
-                    <div class="card text-white ml-2 shadow-sm h-100" style="background: #1b1e21">
+                    <div class="card text-white ml-2 shadow-sm h-100" style="background: #1b1e21; margin-top: 10px">
                         <img class="card-img-top" src="/storage/boxes/{{$row['box']->logo}}" alt="Card image cap" style="height: 200px">
                         <div class="card-body">
                             <h5 class="card-title">{{$row['box']->title}}</h5>
