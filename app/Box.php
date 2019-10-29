@@ -15,4 +15,8 @@ class Box extends Model
     public function submissions() {
         return $this->hasMany(Submission::class);
     }
+
+    public function hints() {
+        return $this->hasMany(HintRequest::class);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Box;
 use App\Config;
+use App\HintRequest;
 use App\Level;
 use App\Report;
 use App\Submission;
@@ -132,6 +133,22 @@ class HomeController extends Controller
         }
         toastr()->error('File not found in Request!');
         return back();
+    }
+
+    public function handleRequestHint(Request $request) {
+        if ($request->has('box_id')) {
+            $box = Box::findOrFail($request->get('box_id'));
+            $hintRequest = new HintRequest();
+            $hintRequest->fill([
+                'user_id' => auth()->user()->id,
+                'box_id' => $box->id
+            ]);
+            if ($hintRequest->save()) {
+                return response()->json(['status' => 'ok'], 201);
+            }
+            return response()->json(['status' => 'fail'], 500);
+        }
+        return response()->json(['status' => 'fail'], 422);
     }
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Box;
 use App\Config;
+use App\HintRequest;
 use App\Level;
 use App\User;
 use Illuminate\Http\Request;
@@ -196,6 +197,9 @@ class AdminController extends Controller
         if ($box->levels->count() > 0) {
             $box->levels()->delete();
         }
+        if ($box->hints->count() > 0) {
+            $box->hints()->delete();
+        }
         $box->delete();
         toastr()->success('Box deleted successfully!');
         return response()->json('ok');
@@ -220,6 +224,7 @@ class AdminController extends Controller
             $progress->push([
                 'box' => $box->title,
                 'progress' => $flagsFound / $boxLevelCount * 100,
+                'flagFraction' => $flagsFound . ' / ' . $boxLevelCount,
                 'score' => $points
             ]);
         }
@@ -228,7 +233,8 @@ class AdminController extends Controller
             'team' => $team,
             'progress' => $progress,
             'feed' => $feed,
-            'reports' => $team->reports()->orderBy('created_at', 'DESC')->get()
+            'reports' => $team->reports()->orderBy('created_at', 'DESC')->get(),
+            'hintRequests' => $team->hints
         ]);
     }
 
@@ -242,6 +248,9 @@ class AdminController extends Controller
         }
         if ($team->reports->count() > 0) {
             $team->reports()->delete();
+        }
+        if ($team->hints->count() > 0) {
+            $team->hints()->delete();
         }
         $team->delete();
         toastr()->success('Team deleted successfully!');
@@ -280,5 +289,37 @@ class AdminController extends Controller
             toastr()->error('Invalid Request');
         }
         return back();
+    }
+
+    public function showHintRequests() {
+        return view('admin.hint_requests', [
+            'hintRequests' => HintRequest::paginate(20)
+        ]);
+    }
+
+    public function toggleActiveStatus(Request $request) {
+        if ($request->has('value') && $request->has('request_id')) {
+            $rq = HintRequest::findOrFail($request->get('request_id'));
+            $rq->active = $request->get('value') === '1' ? false : true;
+            $rq->save();
+            return response()->json(['status' => 'ok'], 200);
+        }
+        return response()->json(['status' => 'fail'], 422);
+    }
+
+    public function updateCost(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'request_id' => 'required|numeric',
+            'cost' => 'required|numeric|gte:0|lte:10'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['status' => 'fail'], 422);
+        }
+
+        $rq = HintRequest::findOrFail($request->get('request_id'));
+        $rq->cost = $request->get('cost');
+        $rq->save();
+        return response()->json(['status' => 'ok'], 200);
+
     }
 }

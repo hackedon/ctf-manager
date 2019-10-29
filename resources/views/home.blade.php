@@ -102,6 +102,9 @@
                             <div class="text-center mt-2">
                                 {{$row['flagsFoundText']}}
                                 <h4><span class="badge badge-info">{{$row['points'].' / '.$row['totalPoints']}} Points</span></h4>
+                                <button style="color: inherit" class="btn btn-link btn-sm text-muted" onclick="if(confirm('Are you sure? (Subject to points deduction)')) requestHint('{{$row['box']->id}}')">
+                                    Request Hint
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -151,5 +154,15 @@
             minWord: ' mins',
             secWord: ' secs'
         });
+
+        const requestHint = box_id => {
+            axios.post('{{route('user.request.hint')}}', {box_id}).then(res => {
+                toastr.success('Request for hint has been recorded');
+            }).catch(e => {
+                toastr.error(e.response.data.message);
+                toastr.info('You can request for hints once every 10 minutes.');
+            });
+        };
+
     </script>
 @endsection

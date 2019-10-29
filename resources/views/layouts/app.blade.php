@@ -100,6 +100,9 @@
                             <a class="nav-link" href="{{route('admin.summary')}}">Summary</a>
                         </li>
                         <li class="nav-item mr-3">
+                            <a class="nav-link" href="{{route('admin.show.hint.requests')}}">Hint Requests</a>
+                        </li>
+                        <li class="nav-item mr-3">
                             <a class="nav-link" href="{{route('rules')}}">Rules</a>
                         </li>
                         <li class="nav-item dropdown">

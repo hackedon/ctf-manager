@@ -37,15 +37,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function submissions(){
+    public function submissions() {
         return $this->hasMany(Submission::class);
     }
 
-    public function reports(){
+    public function reports() {
         return $this->hasMany(Report::class);
     }
 
-    public function isAdmin(){
+    public function hints() {
+        return $this->hasMany(HintRequest::class);
+    }
+
+    public function isAdmin() {
         return $this->role === 'ADMIN';
     }
 }
