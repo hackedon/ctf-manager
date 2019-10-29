@@ -10,11 +10,14 @@
         </nav>
         <div class="row justify-content-between">
             <div class="col-md-8">
-                <img src="/storage/avatars/{{$team->avatar}}" class="float-left img-thumbnail mr-3" style="width: 150px">
-                <div class="text-white ml-3">
+                @if(isset($team->avatar))
+                    <img src="/storage/avatars/{{$team->avatar}}" class="float-left img-thumbnail mr-3" style="width: 150px">
+                @endif
+                <div class="text-white {{isset($team->avatar) ? 'ml-3': ''}}">
                     <h1 class="display-3">{{$team->display_name}}</h1>
                 </div>
                 <div>
+                    <button class="btn btn-outline-warning mr-4">Record Points Deduction</button>
                     <button class="btn btn-outline-danger" onclick="if(confirm('Are you absolutely sure?')) deleteTeam()">Delete Team</button>
                 </div>
             </div>

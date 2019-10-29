@@ -85,6 +85,9 @@
                             <a class="nav-link mr-3" href="{{route('admin.summary')}}">Summary</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link mr-3" href="{{route('rules')}}">Rules</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))

@@ -9,14 +9,14 @@
             </ol>
         </nav>
         <div class="row justify-content-between">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <img src="/storage/boxes/{{$box->logo}}" class="float-left img-thumbnail mr-3" style="width: 250px">
                 <div class="text-white ml-3">
                     <h1 class="display-3">{{$box->title}}</h1>
                     <p>
                         {{$box->description}}
                         @if(isset($box->author)) <br><small class="text-muted">{{'@'.$box->author}}</small> @endif @if(isset($box->difficulty)) | <small
-                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif @if(isset($box->difficulty)) | <small
+                            class="text-muted">difficulty: {{$box->difficulty}}/10</small> @endif @if(isset($box->url)) | <small
                             class="text-muted"><a style="color: inherit" target="_blank" href="{{$box->url}}">{{$box->url}}</a></small> @endif
                     </p>
                 </div>
