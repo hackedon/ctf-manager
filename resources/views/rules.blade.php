@@ -30,6 +30,7 @@
                     <li>Loan points will be deducted at the final marks evaluation.</li>
                     <li>Flag formats vary in each box.</li>
                     <li>The flag submission endpoint is rate-limited. Do not attempt to submit more than 3 flags per minute, you’ll be locked out.</li>
+                    <li>Remote Connection/Desktop applications (e.g: TeamViewer, AnyDesk etc.) are completely prohibited from use and will lead to your disqualification</li>
                 </ol>
             </div>
         </div>
