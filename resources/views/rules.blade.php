@@ -29,8 +29,8 @@
                     <li>If you require hints for the 1st level, please inform the organizers. They will grant a variable amount of loan points based on the box and level.</li>
                     <li>Loan points will be deducted at the final marks evaluation.</li>
                     <li>Flag formats vary in each box.</li>
-                    <li>The flag submission endpoint is rate-limited. Do not attempt to submit more than 3 flags per minute, you’ll be locked out.</li>
-                    <li>Remote Connection/Desktop applications (e.g: TeamViewer, AnyDesk etc.) are completely prohibited from use and will lead to your disqualification</li>
+                    <li>The flag submission endpoint is rate-limited. Do not attempt to submit more than 1 flag per minute, you’ll be locked out.</li>
+                    <li>Remote Connection/Desktop applications (e.g: TeamViewer, AnyDesk etc.) are completely prohibited from use and will lead to your disqualification.</li>
                 </ol>
             </div>
         </div>
@@ -60,7 +60,7 @@
                     <li>The marks displayed on the system is subject to change.</li>
                     <li>Changes may occur after judges’ evaluation of Flag Report submitted by your team.</li>
                     <li>Finalists will be notified within the day & are expected to participate in the final awards ceremony.</li>
-{{--                    <li>Awards Ceremony will start at 2.00pm on 3rd October 2018.</li>--}}
+                    <li>Awards Ceremony will start on the 1st November 2019.</li>
                 </ol>
             </div>
         </div>
