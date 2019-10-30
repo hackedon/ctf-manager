@@ -89,6 +89,8 @@
                                     </div>
                                 </div>
                             </form>
+                            <hr>
+                            <a href="{{route('countdown')}}" target="_blank" class="btn btn-outline-light btn-block">Start Countdown</a>
                         </div>
                     </div>
                 </div>
