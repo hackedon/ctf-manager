@@ -10,6 +10,7 @@ use App\Report;
 use App\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
@@ -24,8 +25,21 @@ class HomeController extends Controller
         if (auth()->user()->isAdmin()) {
             return redirect()->route('admin.home');
         }
-        $boxes = Box::all();
         $user = auth()->user();
+        $key = $user->username . '_data';
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
+            return view('home', [
+                'summary' => $data['summary'],
+                'feed' => $data['feed'],
+                'canUpload' => $data['canUpload'],
+                'remainingUploads' => $data['remainingUploads'],
+                'allowReportUploads' => $data['allowReportUploads'],
+                'allowFlagSubmission' => $data['allowFlagSubmission'],
+            ]);
+        }
+
+        $boxes = Box::all();
         $summaryCollection = new Collection();
         foreach ($boxes as $box) {
             $flagsFound = 0;
@@ -49,11 +63,20 @@ class HomeController extends Controller
 
         $allowReportUploads = Config::where('key', 'allowReportUploads')->first()->value === '1';
         $allowFlagSubmission = Config::where('key', 'allowFlagSubmission')->first()->value === '1';
+        $feed = auth()->user()->submissions()->orderBy('created_at', 'DESC')->limit(10)->get();
 
+        Cache::put($key, [
+            'summary' => $summaryCollection,
+            'feed' => $feed,
+            'canUpload' => $user->reports->count() < 5,
+            'remainingUploads' => 5 - $user->reports->count(),
+            'allowReportUploads' => $allowReportUploads,
+            'allowFlagSubmission' => $allowFlagSubmission
+        ], now()->addMinutes(5));
 
         return view('home', [
             'summary' => $summaryCollection,
-            'feed' => auth()->user()->submissions()->orderBy('created_at', 'DESC')->limit(10)->get(),
+            'feed' => $feed,
             'canUpload' => $user->reports->count() < 5,
             'remainingUploads' => 5 - $user->reports->count(),
             'allowReportUploads' => $allowReportUploads,
@@ -89,6 +112,8 @@ class HomeController extends Controller
                     $submission->level_id = $level->id;
                     $submission->submitted_text = $request->get('flag');
                     $submission->saveOrFail();
+                    $key = $user->username . '_data';
+                    Cache::forget($key);
                     toastr()->success('Flag no. ' . $level->flag_no . ' submitted for ' . $level->box->title . ' box.', 'Valid Flag Submission');
                 }
                 return back();
@@ -125,6 +150,8 @@ class HomeController extends Controller
                 toastr()->success('Report uploaded successfully!');
                 $remaining = 5 - Report::where('user_id', auth()->user()->id)->count();
                 toastr()->info('You have ' . $remaining . ' upload chances remaining.');
+                $key = auth()->user()->username . '_data';
+                Cache::forget($key);
                 return back();
             } else {
                 toastr()->error('Allowed formats are .docx and .doc');

@@ -9,6 +9,7 @@ use App\Level;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Ramsey\Uuid\Uuid;
@@ -207,7 +208,7 @@ class AdminController extends Controller
 
     public function showTeam($id) {
         $team = User::findOrFail($id);
-        if($team->isAdmin()){
+        if ($team->isAdmin()) {
             toastr()->error('Invalid Team');
             return back();
         }
@@ -262,6 +263,11 @@ class AdminController extends Controller
     }
 
     public function summary() {
+        if (Cache::has('points')) {
+            return view('admin.summary', [
+                'points' => Cache::get('points')
+            ]);
+        }
         $teams = User::where('role', 'USER')->orderBy('created_at', 'DESC')->get();
         $points = new Collection();
         foreach ($teams as $team) {
@@ -271,6 +277,7 @@ class AdminController extends Controller
             }
             $points->push(['team' => $team->display_name, 'points' => $teamPoints]);
         }
+        Cache::put('points', $points, now()->addMinutes(5));
         return view('admin.summary', [
             'points' => $points
         ]);
@@ -282,12 +289,14 @@ class AdminController extends Controller
             $config = Config::where('key', 'allowFlagSubmission')->first();
             $config->value = $val;
             $config->save();
+            Cache::flush();
             toastr()->success('Allow Flag Submission updated');
         } elseif ($request->has('allowReportUploads')) {
             $val = $request->get('allowReportUploads') === '1' ? '1' : '0';
             $config = Config::where('key', 'allowReportUploads')->first();
             $config->value = $val;
             $config->save();
+            Cache::flush();
             toastr()->success('Allow Report Uploads updated');
         } else {
             toastr()->error('Invalid Request');
