@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        
         <div class="row justify-content-center" style="margin-top: 150px">
             <div>
                 <div class="countdown" data-date="31-10-2019" data-time="17:10">

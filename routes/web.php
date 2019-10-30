@@ -21,7 +21,8 @@ Route::get('/rules', function () {
 })->name('rules');
 
 // 2 requests per minute
-Route::post('/submitFlag', 'HomeController@submitFlag')->middleware(['throttle:2,1'])->name('user.submit.flag');
+//Route::post('/submitFlag', 'HomeController@submitFlag')->middleware(['throttle:2,1'])->name('user.submit.flag');
+Route::post('/submitFlag', 'HomeController@submitFlag')->name('user.submit.flag');
 // 1 requests per minute
 Route::post('/uploadReport', 'HomeController@uploadReport')->middleware(['throttle:1,1'])->name('user.upload.report');
 Route::post('/requestHint', 'HomeController@handleRequestHint')->middleware(['throttle:1,10'])->name('user.request.hint');
