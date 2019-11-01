@@ -44,7 +44,7 @@
         .countdown .min .num,
         .countdown .sec .num {
             display: block;
-            font-size: 8vw;
+            font-size: 16vw;
             line-height: 1em;
         }
 
@@ -53,10 +53,20 @@
         .countdown .min .word,
         .countdown .sec .word {
             display: block;
-            font-size: 4vw;
+            font-size: 6vw;
             color: #8a99ab;
         }
     </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143030264-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-143030264-2');
+    </script>
 
 </head>
 <body style="background: #343a40">

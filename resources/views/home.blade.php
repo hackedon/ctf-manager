@@ -60,10 +60,10 @@
                 <h4 class="display-4">Boxes</h4>
             </div>
         </div>
-        <div class="row justify-content-center">
+        <div class="row">
             @foreach($summary as $row)
-                <div class="col-sm-4">
-                    <div class="card text-white ml-2 shadow-sm h-100" style="background: #1b1e21">
+                <div class="col-sm-4 mt-3">
+                    <div class="card text-white ml-2 shadow-sm h-100" style="background: #1b1e21;">
                         <img class="card-img-top" src="/storage/boxes/{{$row['box']->logo}}" alt="Card image cap" style="height: 200px">
                         <div class="card-body">
                             <h5 class="card-title">{{$row['box']->title}}</h5>
@@ -85,13 +85,14 @@
                                 <div class="progress-bar progress-bar-striped {{$row['completePercentage'] === 100 ? 'bg-success' : 'progress-bar-animated bg-dark'}}" role="progressbar"
                                      style="width: {{$row['completePercentage']}}%;"
                                      aria-valuenow="{{$row['completePercentage']}}" aria-valuemin="0" aria-valuemax="100">
-                                    <strong>{{$row['completePercentage']}}%</strong>
+                                    <strong>{{number_format($row['completePercentage'],2)}}%</strong>
                                 </div>
                             </div>
                             <div class="text-center mt-2">
                                 {{$row['flagsFoundText']}}
                                 <h4><span class="badge badge-info">{{$row['points'].' / '.$row['totalPoints']}} Points</span></h4>
-                                <button style="color: inherit" class="btn btn-link btn-sm text-muted" onclick="if(confirm('Are you sure? (Subject to points deduction)')) requestHint('{{$row['box']->id}}')">
+                                <button style="color: inherit" class="btn btn-link btn-sm text-muted"
+                                        onclick="if(confirm('Are you sure? (Subject to points deduction)')) requestHint('{{$row['box']->id}}')">
                                     Request Hint
                                 </button>
                             </div>
