@@ -1,7 +1,9 @@
-<p align="center"><img src="https://raw.githubusercontent.com/hackedon/blog_images/master/hackedon-ctf-manager.png" width="600"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/hackedon/blog_images/master/hackedon-ctf-manager.png" width="800"></p>
 
 <p align="center">
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+
+> <img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License">
+
 </p>
 
 ## About HackedON CTF Manager
@@ -26,11 +28,11 @@ The application was developed with security and reliability as a priority. The f
 
 The following are requirements for HackedON CTF Manager.
 
-- All Laravel 5.8 requirements (PHP 7.2)
+- All Laravel 5.8 requirements (PHP 7.2 and php extensions) (View Laravel 5.8 documentation)
 - Apache / Nginx (Nginx preferred)
-- Redis / Memcached Server
+- Redis / Memcached Server (Redis preferred)
 - predis/predis composer package (if Redis is used)
-- MySQL or Laravel compliant database server
+- MySQL or Laravel compliant database server (MySQL preferred)
 
 The setup process is as follows.
 
