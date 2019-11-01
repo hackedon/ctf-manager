@@ -46,6 +46,7 @@ The setup process is as follows.
   - Database details
   - CACHE_DRIVER=redis
   - REDIS_HOST, REDIS_PASSWORD
+- Create database schema and populate it by `php artisan migrate` and `php artisan db:seed` respectively.
 - Create new entry at `/etc/nginx/sites-available` to reflect the ctf-manager app and then `sudo service nginx restart`
 
 ## License
